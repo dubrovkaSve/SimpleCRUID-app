@@ -9,6 +9,7 @@ import ru.springcourse.dao.PersonDAO;
 import ru.springcourse.models.Person;
 import ru.springcourse.util.PersonValidator;
 
+
 import javax.validation.Valid;
 
 @Controller
@@ -44,8 +45,9 @@ public class PeopleController {
     }
 
     @PostMapping
-    public String create(@ModelAttribute("person") @Valid Person person,
-                         BindingResult bindingResult) {
+    public String create(
+            @ModelAttribute("person") @Valid Person person,
+            BindingResult bindingResult) {
         personValidator.validate(person, bindingResult);
 
         if (bindingResult.hasErrors()) {
