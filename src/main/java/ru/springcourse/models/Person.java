@@ -3,12 +3,12 @@ package ru.springcourse.models;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
+import java.util.List;
 
 
 @Entity
 @Table(name = "Person")
 public class Person {
-
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,12 +32,14 @@ public class Person {
     @Column(name = "address")
     private String address;
 
+    @OneToMany(mappedBy = "owner")
+    private List<Item> items;
+
     public Person() {
 
     }
 
-    public Person(int id, String name, int age, String email, String address) {
-        this.id = id;
+    public Person(String name, int age, String email, String address) {
         this.name = name;
         this.age = age;
         this.email = email;
@@ -83,4 +85,6 @@ public class Person {
     public void setAddress(String address) {
         this.address = address;
     }
+
+
 }
