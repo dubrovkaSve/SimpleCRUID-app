@@ -6,7 +6,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.springcourse.models.Person;
-import ru.springcourse.services.ItemService;
 import ru.springcourse.services.PeopleService;
 import ru.springcourse.util.PersonValidator;
 
@@ -28,8 +27,9 @@ public class PeopleController {
 
     @GetMapping()
     public String index(Model model) {
-        model.addAttribute("people", peopleService.findAll());
-        return "people/index";
+       model.addAttribute("people", peopleService.findAll());
+
+       return "people/index";
     }
 
     @GetMapping("/{id}")

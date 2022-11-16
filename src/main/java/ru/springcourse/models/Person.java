@@ -1,9 +1,14 @@
 package ru.springcourse.models;
 
 
+import org.springframework.format.annotation.DateTimeFormat;
+import ru.springcourse.util.DateOfBirth;
+
 import javax.persistence.*;
 import javax.validation.constraints.*;
+import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 
 @Entity
@@ -32,6 +37,16 @@ public class Person {
     @Column(name = "address")
     private String address;
 
+    @Column(name = "date_of_birth")
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    @DateOfBirth
+    private Date dateOfBirth;
+
+    @Column(name = "created_at")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createdAt;
+
     @OneToMany(mappedBy = "owner")
     private List<Item> items;
 
@@ -39,11 +54,12 @@ public class Person {
 
     }
 
-    public Person(String name, int age, String email, String address) {
+    public Person(String name, int age, String email, String address, Date dateOfBirth) {
         this.name = name;
         this.age = age;
         this.email = email;
         this.address = address;
+        this.dateOfBirth = dateOfBirth;
     }
 
     public int getId() {
@@ -86,5 +102,42 @@ public class Person {
         this.address = address;
     }
 
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    public Date getDateOfBirth() {
+        return dateOfBirth;
+    }
 
+    public void setDateOfBirth(Date dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public List<Item> getItems() {
+        return items;
+    }
+
+    public void setItems(List<Item> items) {
+        this.items = items;
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Person person = (Person) o;
+        return id == person.id && age == person.age && Objects.equals(name, person.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, age);
+    }
 }
